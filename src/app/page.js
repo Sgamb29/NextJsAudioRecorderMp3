@@ -169,7 +169,7 @@ async function getWakeLock() {
     <div className={styles.page}>
       <main className={styles.main}>
         <h1><u>Audio Recorder Mp3</u></h1>
-        <p><em>Warning: All unsaved audio clips will be lost on leaving or refreshing the page.</em></p>
+        <p><em><u>Warning: All unsaved audio clips will be lost on leaving or refreshing the page.</u></em></p>
         <button className={`${styles.controlButton} ${styles.optsBtn}`} onClick={getWakeLock}>{wakeButtonText}</button>
         <button className={`${styles.controlButton} ${recBtnColor}`} onClick={startRecord} disabled={recBtnDisabled}>Record</button>
         <button className={`${styles.controlButton} ${pauseBtnColor}`} onClick={pauseRecording}>Pause</button>

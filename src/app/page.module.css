@@ -19,7 +19,7 @@
 }
 
 .main {
-  background: linear-gradient(90deg, green, silver, green);
+  background: linear-gradient(90deg, green, white, green);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,6 +44,7 @@
   padding-right: 40px;
   border: 1px solid black;
   background-color: silver;
+  border-radius: 15%;
 }
 
 .audioEl {
@@ -51,9 +52,6 @@
   background-color: white;
 }
 
-.clipCard {
-  border: 1px solid white;
-}
 
 .recBtnRed {
   background-color: red;
