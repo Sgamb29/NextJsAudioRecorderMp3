@@ -35,6 +35,7 @@ export default function Home() {
   const [wakeLockHolder, setWakeLock] = useState(null);
   const [wakeSupported, setWakeSupported] = useState(false);
   const [wakeButtonText, setWakeButtonText] = useState("Keep Screen Awake");
+  const [indicatorText, setIndicatorText] = useState("");
 
   useEffect(() => {
 
@@ -72,6 +73,7 @@ export default function Home() {
                 recorder.onstop = async (e) => {
                   console.log("recorder stopped");
                 
+
                   let clipName = prompt("Enter a name for your sound clip, leave blank to use time of recording.");
                   if (clipName === "") {
                       clipName = getDateTimeString();
@@ -79,7 +81,6 @@ export default function Home() {
                   const blob = new Blob(chunks, {type: "audio/mp3; codecs=mp3"});
                   chunks = [];
                   
-
                   // Process Audio
                   const currentFfmpeg = ffmpegRef.current;
                   const inputFileName = "input.mp3";
@@ -92,6 +93,7 @@ export default function Home() {
                   const audioURL = window.URL.createObjectURL(updatedBlob);
 
                   setClipInfoArr((prev) => [...prev, new clipInfo(clipName, audioURL, audioURL),]);
+                  setIndicatorText("");
                 };
 
                 setMediaRecorder(recorder);
@@ -132,6 +134,7 @@ function pauseRecording() {
 
 function stopRecording() {
   if (mediaRecorder.state === "recording" | mediaRecorder.state === "paused") {
+    setIndicatorText("Processing audio, please wait.");
     mediaRecorder.stop();
     console.log(mediaRecorder.state);
     console.log("recorder stopped");
@@ -174,6 +177,7 @@ async function getWakeLock() {
         <button className={`${styles.controlButton} ${recBtnColor}`} onClick={startRecord} disabled={recBtnDisabled}>Record</button>
         <button className={`${styles.controlButton} ${pauseBtnColor}`} onClick={pauseRecording}>Pause</button>
         <button className={styles.controlButton} onClick={stopRecording}>Stop</button>
+        <p>{indicatorText}</p>
         <div className="AudioCardContainer">
           { clipInfoArr.map(
             ( el, index) => (
