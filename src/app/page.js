@@ -36,6 +36,7 @@ export default function Home() {
   const [wakeSupported, setWakeSupported] = useState(false);
   const [wakeButtonText, setWakeButtonText] = useState("Keep Screen Awake");
   const [indicatorText, setIndicatorText] = useState("");
+  const [troubleShootTip, setTroubleShootTip] = useState("");
 
   useEffect(() => {
 
@@ -63,7 +64,10 @@ export default function Home() {
               }
           )
           .then((stream) => {
-              const recorder = new MediaRecorder(stream);
+              const recorder = new MediaRecorder(stream, {
+                audioBitsPerSecond: 128000,
+
+              });
               let chunks = [];
     
               recorder.ondataavailable = (e) => {
@@ -94,6 +98,7 @@ export default function Home() {
 
                   setClipInfoArr((prev) => [...prev, new clipInfo(clipName, audioURL, audioURL),]);
                   setIndicatorText("");
+                  setRecBtnDisabled(false);
                 };
 
                 setMediaRecorder(recorder);
@@ -135,6 +140,7 @@ function pauseRecording() {
 function stopRecording() {
   if (mediaRecorder.state === "recording" | mediaRecorder.state === "paused") {
     setIndicatorText("Processing audio, please wait.");
+    setRecBtnDisabled(true);
     mediaRecorder.stop();
     console.log(mediaRecorder.state);
     console.log("recorder stopped");
@@ -167,10 +173,21 @@ async function getWakeLock() {
 }
 }
 
+function troubleShootTipSetter() {
+  if (troubleShootTip === "") {
+    const tip = "On mobile in Brave browser if a download link isn't working: press the button to see all of your open tabs and then press on the audio recorder site again.";
+    const tip2 = " Wake Lock Note: If you leave the page you'll have to re-activate the wake lock."
+    setTroubleShootTip(tip + tip2);
+  } else {
+    setTroubleShootTip("");
+  }
+}
+
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+      <button className={`${styles.controlButton} ${styles.optsBtn}`} onClick={troubleShootTipSetter}>Troubleshooting Tips.</button><p><em>{troubleShootTip}</em></p>
         <h1><u>Audio Recorder Mp3</u></h1>
         <p><em><u>Warning: All unsaved audio clips will be lost on leaving or refreshing the page.</u></em></p>
         <button className={`${styles.controlButton} ${styles.optsBtn}`} onClick={getWakeLock}>{wakeButtonText}</button>
