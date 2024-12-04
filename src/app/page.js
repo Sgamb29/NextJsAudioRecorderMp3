@@ -65,7 +65,7 @@ export default function Home() {
           )
           .then((stream) => {
               const recorder = new MediaRecorder(stream, {
-                audioBitsPerSecond: 128000,
+                audioBitsPerSecond: 192000,
 
               });
               let chunks = [];

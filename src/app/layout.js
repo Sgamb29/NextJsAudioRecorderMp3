@@ -15,6 +15,7 @@ const geistMono = localFont({
 export const metadata = {
   title: "Audio Recorder Mp3",
   description: "Simple audio recorder website for making mp3 files.",
+  keywords: "Audio, Recorder, MP3, Voice, Free",
 };
 
 export default function RootLayout({ children }) {
