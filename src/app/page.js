@@ -15,7 +15,13 @@ class clipInfo {
 
 function getDateTimeString() {
     const dt = new Date();
-    const dateTimeStr = `${dt.getFullYear()}-${dt.getMonth() + 1}-${dt.getDate()}-${dt.getHours()}-${dt.getMinutes()}-${dt.getSeconds()}`;
+    const month = dt.getMonth() + 1 < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
+    const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
+    const hr = dt.getHours() < 10 ? `0${dt.getHours()}` : dt.getHours();
+    const mins = dt.getMinutes() < 10 ? `0${dt.getMinutes()}` : dt.getMinutes();
+    const secs = dt.getSeconds() < 10 ? `0${dt.getSeconds()}` : dt.getSeconds();
+
+    const dateTimeStr = `${dt.getFullYear()}-${month}-${day}-${hr}-${mins}-${secs}`;
     return dateTimeStr;
 }
 
@@ -145,6 +151,7 @@ function stopRecording() {
     console.log(mediaRecorder.state);
     console.log("recorder stopped");
     setRecBtnColor("");
+    setPauseBtnColor("");
   }
 }
 
