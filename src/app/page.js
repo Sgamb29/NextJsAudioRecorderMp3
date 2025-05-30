@@ -115,12 +115,56 @@ export default function Home() {
     } else {
       console.log("Get user media not supported.");
     }
-    
+
+    try {
+      const ld = getCookie("lastFetch");
+      const lastFetchCall = ld !== "" ? parseInt(ld) : "";
+      makeTrafficCall(lastFetchCall);
+    } catch (e) {
+      console.log("fetch error");
+    }
+
+         
   }, []);
 
+// Traffic count code
+function makeTrafficCall(lastFetch) {
+    // Logic for fetch to only call once per day;
+    const time = new Date();
+    const DOTW = time.getDay();
+    const request = new Request("https://server.sgambapps.com/?site=audioRecorder", {
+        method: "POST",
+    });
+    if (lastFetch !== parseInt(DOTW)) {
+        fetch(request)
+        .then(res => {
+            if (res.ok) {
+            console.log("visit counted");
+            }
+        })
+        .catch(err => console.log(err));
 
+        setCookie("lastFetch", DOTW.toString(), 10000);
+        console.log("set");
+    }
+}
 
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${expires};path=/`;
+}
 
+function getCookie(name) {
+    try {
+        const value = document.cookie.split(`${name}=`)[1].split(";")[0];
+        return value;
+        } catch {
+            return "";
+        }
+        
+}
 
 function startRecord() {
   if (mediaRecorder.state === "recording") {
