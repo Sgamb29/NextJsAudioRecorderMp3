@@ -226,9 +226,10 @@ async function getWakeLock() {
 
 function troubleShootTipSetter() {
   if (troubleShootTip === "") {
-    const tip = "On mobile in Brave browser if a download link isn't working: press the button to see all of your open tabs and then press on the audio recorder site again.";
+    const tip = " On mobile in Brave browser if a download link isn't working: press the button to see all of your open tabs and then press on the audio recorder site again.";
     const tip2 = " Wake Lock Note: If you leave the page you'll have to re-activate the wake lock."
-    setTroubleShootTip(tip + tip2);
+    const tip3 = "Currently this audio recorder DOES NOT work with Safari Browser! (stops recording after 20-30 seconds)."
+    setTroubleShootTip(tip3 + tip + tip2);
   } else {
     setTroubleShootTip("");
   }
