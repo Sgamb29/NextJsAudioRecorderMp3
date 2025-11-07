@@ -34,9 +34,8 @@ export default function ClipCard(props) {
 
     function resetAudioElement() {
         aElement.currentTime = 0;
-        if (aElement.paused) {
-            setButtonText("Play");
-        }
+        aElement.pause();
+        setButtonText("Play");
         setATime(0);
     }
 

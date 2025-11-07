@@ -97,7 +97,7 @@ export default function Home() {
                   const outputFileName = "output.mp3";
 
                   await currentFfmpeg.writeFile(inputFileName, await fetchFile(blob));
-                  await currentFfmpeg.exec(["-i", inputFileName, outputFileName]);
+                  await currentFfmpeg.exec(["-i", inputFileName, "-af", "volume=5", outputFileName]);
                   const data = await currentFfmpeg.readFile(outputFileName);
                   const updatedBlob = new Blob([data.buffer], { type: "audio/mp3"});
                   const audioURL = window.URL.createObjectURL(updatedBlob);
