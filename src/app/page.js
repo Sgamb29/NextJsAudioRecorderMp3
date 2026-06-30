@@ -97,7 +97,7 @@ export default function Home() {
                   const outputFileName = "output.mp3";
 
                   await currentFfmpeg.writeFile(inputFileName, await fetchFile(blob));
-                  await currentFfmpeg.exec(["-i", inputFileName, "-af", "volume=5", outputFileName]);
+                  await currentFfmpeg.exec(["-i", inputFileName, "-af", "volume=3", outputFileName]);
                   const data = await currentFfmpeg.readFile(outputFileName);
                   const updatedBlob = new Blob([data.buffer], { type: "audio/mp3"});
                   const audioURL = window.URL.createObjectURL(updatedBlob);
@@ -226,10 +226,11 @@ async function getWakeLock() {
 
 function troubleShootTipSetter() {
   if (troubleShootTip === "") {
-    const tip = " On mobile in Brave browser if a download link isn't working: press the button to see all of your open tabs and then press on the audio recorder site again.";
+    const tip = " Download link isn't working: press the button to see all of your open tabs and then press on this tab again.";
     const tip2 = " Wake Lock Note: If you leave the page you'll have to re-activate the wake lock."
-    const tip3 = "Currently this audio recorder DOES NOT work with Safari Browser! (stops recording after 20-30 seconds)."
-    setTroubleShootTip(tip3 + tip + tip2);
+    const tip3 = " Audio recorder doesn't work with Safari Browser. (stops recording after 20-30 seconds)."
+    const tip4 = " If the record button isn't working: check browser's microphone permissions in your mobile or pc settings."
+    setTroubleShootTip(tip4 + tip + tip3 + tip2);
   } else {
     setTroubleShootTip("");
   }
