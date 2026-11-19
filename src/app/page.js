@@ -28,7 +28,6 @@ function getDateTimeString() {
 
 let clipCardInfoArray = [];
 
-
 // clipCardInfoArray.push(new clipInfo("testey", "testy", "yoMama"));
 
 export default function Home() {
@@ -84,10 +83,13 @@ export default function Home() {
                   console.log("recorder stopped");
                 
 
-                  let clipName = prompt("Enter a name for your sound clip, leave blank to use time of recording.");
+                  // let clipName = prompt("Enter a name for your sound clip, leave blank to use time of recording.");
+                  // Removed prompt because of bug where android keyboard won't close afterwards.
+                  let clipName = getDateTimeString();
                   if (clipName === "") {
                       clipName = getDateTimeString();
                   }
+
                   const blob = new Blob(chunks, {type: "audio/mp3; codecs=mp3"});
                   chunks = [];
                   
